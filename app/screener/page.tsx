@@ -19,9 +19,13 @@ export default async function ScreenerPage({
 
   const screenerDataResults = await fetchScreenerStocks(screener)
 
+  if (!screenerDataResults) {
+    return <div>No data found for this screener.</div>
+  }
+  
   return (
     <div>
-      <DataTable columns={columns} data={screenerDataResults.quotes} />
+      <DataTable columns={columns} data={screenerDataResults?.quotes || []} />
     </div>
   )
 }

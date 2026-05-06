@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/stocks/markets/data-table"
+import type { Quote } from '@/node_modules/yahoo-finance2/esm/src/modules/quote';
 import YahooFinance from "yahoo-finance2"
 import {
   Card,
@@ -112,15 +113,23 @@ export default async function Home({
     yahooFinance.quoteCombine(symbol)
   )
   const results = await Promise.all(promises)
+  interface StockQuote {
+    regularMarketChangePercent?: number;
+    shortName?: string;
+    [key: string]: any; // Allows for the other 100+ properties
+  }
 
-  const resultsWithTitles = results.map((result, index) => ({
-    ...result,
-    shortName: tickers[index].shortName,
-  }))
+  const resultsWithTitles = results.map((result, index) => {
+    const updatedResult = {
+      ...result,
+      shortName: tickers[index].shortName,
+    };
+    return updatedResult as Quote;
+  });
 
   const marketSentiment = getMarketSentiment(
-    resultsWithTitles[0].regularMarketChangePercent
-  )
+    resultsWithTitles[0]?.regularMarketChangePercent
+  );
 
   const sentimentColor =
     marketSentiment === "bullish"
@@ -147,7 +156,7 @@ export default async function Home({
                 <strong className={sentimentColor}>{marketSentiment}</strong>
               </CardTitle>
             </CardHeader>
-            {news.news[0] && news.news[0].title && (
+            {news?.news[0] && news.news[0].title && (
               <CardFooter className="flex-col items-start">
                 <p className="mb-2 text-sm font-semibold text-neutral-500 dark:text-neutral-500">
                   What you need to know today

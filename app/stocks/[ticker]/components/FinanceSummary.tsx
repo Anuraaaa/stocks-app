@@ -34,8 +34,8 @@ const keysToDisplay = [
 ]
 
 export default async function FinanceSummary({ ticker }: { ticker: string }) {
-  const financeSummaryData = await fetchQuoteSummary(ticker)
-
+  const financeSummaryData = (await fetchQuoteSummary(ticker)) as Record<string, any>;
+ 
   return (
     <div className="grid grid-flow-col grid-rows-6 gap-4 md:grid-rows-3">
       {keysToDisplay.map((item) => {

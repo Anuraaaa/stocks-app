@@ -2,7 +2,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import YahooFinance from "yahoo-finance2";
 
 // Definisikan type untuk filter agar type-safe
-export type TimeFilter = "1d" | "1w" | "1m" | "3m" | "1y" | "5y";
+export type TimeFilter = "1d" | "1w" | "1m" | "3m" | "1y" | "5y" | "10y";
 
 export async function fetchHistorical(ticker: string, range: TimeFilter = "1d") {
   noStore();

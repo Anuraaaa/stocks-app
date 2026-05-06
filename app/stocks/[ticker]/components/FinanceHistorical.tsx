@@ -7,7 +7,7 @@ function formatNumber(num: number) {
   return num?.toLocaleString() ?? "0"
 }
 
-export type TimeFilter = "1d" | "1w" | "1m" | "3m" | "1y" | "5y";
+export type TimeFilter = "1d" | "1w" | "1m" | "3m" | "1y" | "5y" | "10y";
 
 export default async function FinanceHistorical({ ticker, range }: { ticker: string; range: TimeFilter }) {
   // Asumsi: fetchHistorical mengembalikan array of objects

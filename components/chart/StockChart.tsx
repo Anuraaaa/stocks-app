@@ -31,7 +31,13 @@ export default async function StockChart({
   range,
   interval,
 }: StockGraphProps) {
-  const chartData = await fetchChartData(ticker, range, interval)
+  interface ChartResponse {
+    quotes: any[]; // Replace 'any' with your specific quote type if known
+    meta: any;
+    symbol?: string;
+  }
+
+  const chartData = (await fetchChartData(ticker, range, interval)) as ChartResponse;
   const quoteData = await fetchQuote(ticker)
 
   const [chart, quote] = await Promise.all([chartData, quoteData])
@@ -54,77 +60,77 @@ export default async function StockChart({
     <div className="h-[27.5rem] w-full">
       <div>
         <div className="space-x-1 text-muted-foreground">
-          <span className="font-bold text-primary">{quoteData.symbol}</span>
+          <span className="font-bold text-primary">{quoteData?.symbol}</span>
           <span>·</span>
           <span>
-            {quoteData.fullExchangeName === "NasdaqGS"
+            {quoteData?.fullExchangeName === "NasdaqGS"
               ? "NASDAQ"
-              : quoteData.fullExchangeName}
+              : quoteData?.fullExchangeName}
           </span>
-          <span>{quoteData.shortName}</span>
+          <span>{quoteData?.shortName}</span>
         </div>
 
         <div className="flex flex-row items-end justify-between">
           <div className="space-x-1">
             <span className="text-nowrap">
               <span className="text-xl font-bold">
-                {quote.currency === "USD" ? "$" : ""}
-                {quote.regularMarketPrice?.toFixed(2)}
+                {quote?.currency === "USD" ? "$" : ""}
+                {quote?.regularMarketPrice?.toFixed(2)}
               </span>
               <span className="font-semibold">
-                {quote.regularMarketChange &&
-                quote.regularMarketChangePercent !== undefined ? (
-                  quote.regularMarketChange > 0 ? (
+                {quote?.regularMarketChange &&
+                quote?.regularMarketChangePercent !== undefined ? (
+                  quote?.regularMarketChange > 0 ? (
                     <span className="text-green-800 dark:text-green-400">
-                      +{quote.regularMarketChange.toFixed(2)} (+
-                      {quote.regularMarketChangePercent.toFixed(2)}%)
+                      +{quote?.regularMarketChange.toFixed(2)} (+
+                      {quote?.regularMarketChangePercent.toFixed(2)}%)
                     </span>
                   ) : (
                     <span className="text-red-800 dark:text-red-500">
-                      {quote.regularMarketChange.toFixed(2)} (
-                      {quote.regularMarketChangePercent.toFixed(2)}%)
+                      {quote?.regularMarketChange.toFixed(2)} (
+                      {quote?.regularMarketChangePercent.toFixed(2)}%)
                     </span>
                   )
                 ) : null}
               </span>
             </span>
             <span className="inline space-x-1 font-semibold text-muted-foreground">
-              {quote.hasPrePostMarketData && quote.postMarketPrice && (
+              {quote?.hasPrePostMarketData && quote?.postMarketPrice && (
                 <>
                   <span>·</span>
                   <span>
-                    Post-Market: {quote.currency === "USD" ? "$" : ""}
-                    {quote.postMarketPrice.toFixed(2)}
+                    Post-Market: {quote?.currency === "USD" ? "$" : ""}
+                    {quote?.postMarketPrice.toFixed(2)}
                   </span>
                   <span>
-                    {quote.postMarketChange &&
-                    quote.postMarketChangePercent !== undefined ? (
-                      quote.postMarketChange > 0 ? (
+                    {quote?.postMarketChange &&
+                    quote?.postMarketChangePercent !== undefined ? (
+                      quote?.postMarketChange > 0 ? (
                         <span className="text-green-800 dark:text-green-400">
-                          +{quote.postMarketChange.toFixed(2)} (+
-                          {quote.postMarketChangePercent.toFixed(2)}%)
+                          +{quote?.postMarketChange.toFixed(2)} (+
+                          {quote?.postMarketChangePercent.toFixed(2)}%)
                         </span>
                       ) : (
                         <span className="text-red-800 dark:text-red-500">
-                          {quote.postMarketChange.toFixed(2)} (
-                          {quote.postMarketChangePercent.toFixed(2)}%)
+                          {quote?.postMarketChange.toFixed(2)} (
+                          {quote?.postMarketChangePercent.toFixed(2)}%)
                         </span>
                       )
                     ) : null}
                   </span>
                 </>
               )}
-              {quote.hasPrePostMarketData && quote.preMarketPrice && (
+              {quote?.hasPrePostMarketData && quote?.preMarketPrice && (
                 <>
                   <span>·</span>
                   <span>
-                    Pre-Market: {quote.currency === "USD" ? "$" : ""}
-                    {quote.preMarketPrice.toFixed(2)}
+                    Pre-Market: {quote?.currency === "USD" ? "$" : ""}
+                    {quote?.preMarketPrice.toFixed(2)}
                   </span>
                   <span>
-                    {quote.preMarketChange &&
-                    quote.preMarketChangePercent !== undefined ? (
-                      quote.preMarketChange > 0 ? (
+                    {quote?.preMarketChange &&
+                    quote?.preMarketChangePercent !== undefined ? (
+                      quote?.preMarketChange > 0 ? (
                         <span className="text-green-800 dark:text-green-400">
                           +{quote.preMarketChange.toFixed(2)} (+
                           {quote.preMarketChangePercent.toFixed(2)}%)
