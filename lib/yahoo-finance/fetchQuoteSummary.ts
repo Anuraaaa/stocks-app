@@ -1,8 +1,9 @@
 import { unstable_noStore as noStore } from "next/cache"
-import yahooFinance from "yahoo-finance2"
+import YahooFinance from "yahoo-finance2"
 
 export async function fetchQuoteSummary(ticker: string) {
   noStore()
+  const yahooFinance = new YahooFinance()
 
   try {
     const response = await yahooFinance.quoteSummary(ticker, {
@@ -12,6 +13,6 @@ export async function fetchQuoteSummary(ticker: string) {
     return response
   } catch (error) {
     console.log("Failed to fetch quote summary", error)
-    throw new Error("Failed to fetch quote summary.")
+    // throw new Error("Failed to fetch quote summary.")
   }
 }

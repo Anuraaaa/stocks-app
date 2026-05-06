@@ -299,7 +299,7 @@ export default function AreaClosedChart({ chartQuotes, range }: any) {
     [searchParams, pathname]
   )
 
-  const rangeOptions: Range[] = ["1d", "1w", "1m", "3m", "1y"]
+  const rangeOptions: Range[] = ["1d", "1w", "1m", "3m", "1y", "5y", "10y"]
 
   const isValidRange = (r: string): r is Range =>
     rangeOptions.includes(r as Range)
@@ -326,7 +326,7 @@ export default function AreaClosedChart({ chartQuotes, range }: any) {
         }
       >
         {formattedDate}{" "}
-        {range !== "3m" && range !== "1y" && "at " + formattedTime}
+        {range !== "3m" && range !== "1y" && range !== "5y" && range !== "10y" && "at " + formattedTime}
       </div>
       <div className="h-80">
         {chartQuotes.length > 0 ? (

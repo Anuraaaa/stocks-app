@@ -68,6 +68,12 @@ export function CalculateRange(range: string) {
     case "1y":
       currentDate.setFullYear(currentDate.getFullYear() - 1)
       break
+    case "5y":
+      currentDate.setFullYear(currentDate.getFullYear() - 5)
+      break
+    case "10y":
+      currentDate.setFullYear(currentDate.getFullYear() - 10)
+      break
     default:
       throw new Error(`Invalid range: ${range}`)
   }
@@ -89,6 +95,12 @@ export function calculateInterval(range: string) {
       break
     case "3m":
     case "1y":
+      interval = "1d" // 1 day
+      break
+    case "5y":
+      interval = "1d" // 1 day
+      break
+    case "10y":
       interval = "1d" // 1 day
       break
     default:

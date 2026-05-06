@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/stocks/markets/data-table"
-import yahooFinance from "yahoo-finance2"
+import YahooFinance from "yahoo-finance2"
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import { Suspense } from "react"
 import MarketsChart from "@/components/chart/MarketsChart"
 import Link from "next/link"
 import { columns } from "@/components/stocks/markets/columns"
-import SectorPerformance from "@/components/stocks/SectorPerformance"
+// import SectorPerformance from "@/components/stocks/SectorPerformance"
 import {
   validateInterval,
   validateRange,
@@ -106,6 +106,7 @@ export default async function Home({
     (searchParams?.interval as Interval) || DEFAULT_INTERVAL
   )
   const news = await fetchStockSearch("^DJI", 1)
+  const yahooFinance = new YahooFinance();  
 
   const promises = tickers.map(({ symbol }) =>
     yahooFinance.quoteCombine(symbol)
@@ -138,7 +139,7 @@ export default async function Home({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 lg:flex-row">
-        <div className="w-full lg:w-1/2">
+        <div className="w-full">
           <Card className="relative flex h-full min-h-[15rem] flex-col justify-between overflow-hidden">
             <CardHeader>
               <CardTitle className="z-50 w-fit rounded-full px-4  py-2 font-medium dark:bg-neutral-100/5">
@@ -165,7 +166,7 @@ export default async function Home({
             />
           </Card>
         </div>
-        <div className="w-full lg:w-1/2">
+        {/* <div className="w-full lg:w-1/2">
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">Sector Performance</CardTitle>
@@ -176,7 +177,7 @@ export default async function Home({
               </Suspense>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
       <div>
         <h2 className="py-4 text-xl font-medium">Markets</h2>

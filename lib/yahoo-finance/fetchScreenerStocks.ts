@@ -3,15 +3,15 @@ import type {
   ScreenerOptions,
   PredefinedScreenerModules,
   ScreenerResult,
-} from "@/node_modules/yahoo-finance2/dist/esm/src/modules/screener"
-import yahooFinance from "yahoo-finance2"
+} from "@/node_modules/yahoo-finance2/esm/src/modules/screener"
+import YahooFinance from "yahoo-finance2"
 
 const ITEMS_PER_PAGE = 40
 
 export async function fetchScreenerStocks(query: string, count?: number) {
   noStore()
 
-  // PAGINATION IS HANDLED BY TENSTACK TABLE
+  const yahooFinance = new YahooFinance()
 
   const queryOptions: ScreenerOptions = {
     scrIds: query as PredefinedScreenerModules,
@@ -21,13 +21,11 @@ export async function fetchScreenerStocks(query: string, count?: number) {
   }
 
   try {
-    const response: ScreenerResult = await yahooFinance.screener(queryOptions, {
-      validateResult: false,
-    })
+    const response: ScreenerResult = await yahooFinance.screener(queryOptions)
 
     return response
   } catch (error) {
     console.log("Failed to fetch screener stocks", error)
-    throw new Error("Failed to fetch screener stocks.")
+    // throw new Error("Failed to fetch screener stocks.")
   }
 }

@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache"
-import yahooFinance from "yahoo-finance2"
-import type { SearchResult } from "@/node_modules/yahoo-finance2/dist/esm/src/modules/search"
+import YahooFinance from "yahoo-finance2"
+import type { SearchResult } from "@/node_modules/yahoo-finance2/esm/src/modules/search"
 
 export async function fetchStockSearch(ticker: string, newsCount: number = 5) {
   noStore()
@@ -11,6 +11,8 @@ export async function fetchStockSearch(ticker: string, newsCount: number = 5) {
     enableFuzzyQuery: true,
   }
 
+  const yahooFinance = new YahooFinance()
+
   try {
     const response: SearchResult = await yahooFinance.search(
       ticker,
@@ -20,6 +22,6 @@ export async function fetchStockSearch(ticker: string, newsCount: number = 5) {
     return response
   } catch (error) {
     console.log("Failed to fetch stock search", error)
-    throw new Error("Failed to fetch stock search.")
+    // throw new Error("Failed to fetch stock search.")
   }
 }
